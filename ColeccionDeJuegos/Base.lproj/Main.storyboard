@@ -31,13 +31,26 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="n3m-7n-vRc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="pe2-0b-P3K">
+                        <barButtonItem key="leftBarButtonItem" title="Editar" id="Csa-pT-fHW">
                             <connections>
-                                <segue destination="FqJ-qG-ObI" kind="show" id="oKF-hm-6DZ"/>
+                                <action selector="editarFilas:" destination="BYZ-38-t0r" id="bOM-LH-hgE"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="pe2-0b-P3K">
+                                <connections>
+                                    <segue destination="FqJ-qG-ObI" kind="show" identifier="juegoSegue" id="oKF-hm-6DZ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Categorias" id="SAg-NB-VZt">
+                                <connections>
+                                    <segue destination="SbP-3m-eYO" kind="show" identifier="categoriasSegue" id="kZg-1O-epB"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="botonEditar" destination="Csa-pT-fHW" id="OUJ-uW-ULu"/>
                         <outlet property="tableView" destination="Q52-4K-QZx" id="35A-rA-cjw"/>
                     </connections>
                 </viewController>
@@ -75,6 +88,18 @@
                                     <action selector="agregarTapped:" destination="FqJ-qG-ObI" eventType="touchUpInside" id="VzA-hU-BE0"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNi-zh-sm6">
+                                <rect key="frame" x="169" y="390" width="76" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Eliminar"/>
+                                <connections>
+                                    <action selector="eliminarTapped:" destination="FqJ-qG-ObI" eventType="touchUpInside" id="7kS-Lp-eMH"/>
+                                </connections>
+                            </button>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8WY-UT-DWk">
+                                <rect key="frame" x="0.0" y="429" width="414" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DUL-mr-8x7"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -86,6 +111,8 @@
                             <constraint firstItem="HuH-uj-IWO" firstAttribute="centerX" secondItem="eIC-lk-gfb" secondAttribute="centerX" id="bi1-ou-lNC"/>
                             <constraint firstItem="HuH-uj-IWO" firstAttribute="top" secondItem="kdj-J6-IVh" secondAttribute="bottom" constant="20" id="gYO-w5-f8b"/>
                             <constraint firstItem="JFx-fU-hgT" firstAttribute="centerX" secondItem="eIC-lk-gfb" secondAttribute="centerX" id="gf4-HB-iMf"/>
+                            <constraint firstItem="yNi-zh-sm6" firstAttribute="top" secondItem="HuH-uj-IWO" secondAttribute="bottom" constant="15" id="q4m-Pb-1fS"/>
+                            <constraint firstItem="yNi-zh-sm6" firstAttribute="centerX" secondItem="eIC-lk-gfb" secondAttribute="centerX" id="vRO-Iy-68w"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="SKm-Cc-2K3">
@@ -104,12 +131,94 @@
                     </navigationItem>
                     <connections>
                         <outlet property="JuegoImageView" destination="JFx-fU-hgT" id="6yo-0t-4LP"/>
+                        <outlet property="agregarActualizarBoton" destination="HuH-uj-IWO" id="9h6-lm-SbK"/>
+                        <outlet property="categoriaPickerView" destination="8WY-UT-DWk" id="ThB-1Q-tuY"/>
+                        <outlet property="eliminarBoton" destination="yNi-zh-sm6" id="KUk-tu-oCv"/>
                         <outlet property="tituloTextField" destination="kdj-J6-IVh" id="T5H-Id-x1J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3iK-qi-UW3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1117" y="84"/>
+        </scene>
+        <!--Tabla Categoria View Controller-->
+        <scene sceneID="SiC-ds-lUn">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="SbP-3m-eYO" customClass="TablaCategoriaViewController" customModule="ColeccionDeJuegos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5Tn-rz-K45">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="UXZ-Dd-yYf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ftt-kN-DlH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="ftt-kN-DlH" firstAttribute="trailing" secondItem="UXZ-Dd-yYf" secondAttribute="trailing" id="L3g-nS-0js"/>
+                            <constraint firstItem="UXZ-Dd-yYf" firstAttribute="leading" secondItem="ftt-kN-DlH" secondAttribute="leading" id="f5z-hV-aFo"/>
+                            <constraint firstItem="UXZ-Dd-yYf" firstAttribute="top" secondItem="ftt-kN-DlH" secondAttribute="top" id="heZ-v3-14A"/>
+                            <constraint firstItem="ftt-kN-DlH" firstAttribute="bottom" secondItem="UXZ-Dd-yYf" secondAttribute="bottom" id="zAl-Wg-gHr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GQd-Om-kR4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="HpY-tz-pjC">
+                            <connections>
+                                <segue destination="iEC-Jr-4q0" kind="show" id="94D-J5-fIf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableCategorias" destination="UXZ-Dd-yYf" id="ShO-1O-2Ik"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Abk-8p-igO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="441" y="754"/>
+        </scene>
+        <!--Categorias View Controller-->
+        <scene sceneID="ei8-Mu-I2b">
+            <objects>
+                <viewController id="iEC-Jr-4q0" customClass="CategoriasViewController" customModule="ColeccionDeJuegos" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uJh-mW-I8M">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NVl-hl-iss">
+                                <rect key="frame" x="70" y="173" width="274" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="171-8M-K2m">
+                                <rect key="frame" x="169" y="252" width="76" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Agregar"/>
+                                <connections>
+                                    <action selector="agregarTapped:" destination="iEC-Jr-4q0" eventType="touchUpInside" id="5zh-d6-CBJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Lul-Fj-LMV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="171-8M-K2m" firstAttribute="centerX" secondItem="uJh-mW-I8M" secondAttribute="centerX" id="6gF-r8-Srb"/>
+                            <constraint firstItem="NVl-hl-iss" firstAttribute="top" secondItem="Lul-Fj-LMV" secondAttribute="top" constant="85" id="CCd-Pd-ICr"/>
+                            <constraint firstItem="NVl-hl-iss" firstAttribute="leading" secondItem="Lul-Fj-LMV" secondAttribute="leading" constant="70" id="CWH-Lq-kRJ"/>
+                            <constraint firstItem="171-8M-K2m" firstAttribute="top" secondItem="NVl-hl-iss" secondAttribute="bottom" constant="45" id="hJp-tw-ntp"/>
+                            <constraint firstItem="NVl-hl-iss" firstAttribute="centerX" secondItem="uJh-mW-I8M" secondAttribute="centerX" id="i46-1P-PpO"/>
+                            <constraint firstItem="Lul-Fj-LMV" firstAttribute="trailing" secondItem="NVl-hl-iss" secondAttribute="trailing" constant="70" id="wBe-TN-081"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="0dQ-cb-D0h"/>
+                    <connections>
+                        <outlet property="categoriaTextField" destination="NVl-hl-iss" id="7Jf-ay-YHq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gOI-1J-Qw4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1114.4927536231885" y="753.34821428571422"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="idm-QQ-hKf">

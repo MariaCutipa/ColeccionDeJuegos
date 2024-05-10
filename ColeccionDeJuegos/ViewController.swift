@@ -21,8 +21,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return juegos.count
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let juego = juegos[indexPath.row]
+        performSegue(withIdentifier: "juegoSegue", sender: juego)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let juego = juegos[indexPath.row]
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            context.delete(juego)
+            do {
+                try context.save()
+                juegos.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } catch {
+                print("Error deleting game: \(error)")
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let juego = juegos.remove(at: sourceIndexPath.row)
+        juegos.insert(juego, at: destinationIndexPath.row)
+    }
 
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var botonEditar: UIBarButtonItem!
+    
+    @IBAction func editarFilas(_ sender: Any) {
+        tableView.isEditing = !tableView.isEditing
+        if tableView.isEditing {
+            botonEditar.title = "Terminar"
+        } else {
+            botonEditar.title = "Editar"
+        }
+    }
+    
     var juegos : [Juego] = []
     
     override func viewDidLoad() {
@@ -40,6 +76,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }catch{
             
         }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "juegoSegue" {
+            let siguienteVC = segue.destination as! JuegosViewController
+            siguienteVC.juego = sender as? Juego
+        }
+        if (segue.identifier == "categoriasSegue"){
+            let siguienteVC = segue.destination as! TablaCategoriaViewController
+        }
+        
     }
 
 
